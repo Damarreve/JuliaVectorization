@@ -7,7 +7,7 @@ julia --version >/dev/null 2>&1
 pushd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1
 for File in $(find ./src -type f -name *.jl)
 do
-    echo -e "\033[0;32m"$(basename ${File})"\033[0m:"
+    echo -e "\033[0;36m"$(basename ${File})"\033[0m:"
     julia ${File}
     echo
 done
