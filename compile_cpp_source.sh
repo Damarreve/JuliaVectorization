@@ -6,7 +6,7 @@ gcc --version >/dev/null 2>&1
 [[ "${@:1:1}" == "-Domp" ]] && UseOMP=f || UseOMP=y
 
 BuildDir="../../build"
-pushd src/cpp >/dev/null 2>&1
+pushd $(dirname ${BASH_SOURCE[0]})/src/cpp >/dev/null 2>&1
 rm -rf ${BuildDir}
 mkdir ${BuildDir}
 for File in $(find ./ -type f)
