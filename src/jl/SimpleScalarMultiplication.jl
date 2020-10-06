@@ -17,12 +17,16 @@ function multiply(matrix, vector)
   return result
 end
 
-size = 5000
+size = 20000
 ratio = 100
 debug = false
 
+println("Dimension is ", size)
+t_start = now()
 vector = rand(size) * ratio
 matrix = rand(size, size) * ratio
+t_end = now()
+println("Random matrix and vector created for ", t_end - t_start)
 
 t_start = now()
 result = multiply(matrix, vector)
@@ -37,4 +41,4 @@ if debug
   println()
 end
 
-println("Scalar multiplication of matrix by vector took ", t_end - t_start, " (dimension is ", size, ")")
+println("Scalar multiplication of matrix by vector took ", t_end - t_start)
