@@ -3,6 +3,8 @@
 gcc --version >/dev/null 2>&1
 [[ $? -ne 0 ]] && echo -e "Приложение \033[0;32mgcc\033[0m не найдено" && exit 127
 
+[[ "${@:1:1}" == "-Domp" ]] && UseOMP=f || UseOMP=y
+
 BuildDir="../../build"
 pushd src/cpp >/dev/null 2>&1
 rm -rf ${BuildDir}
@@ -13,6 +15,7 @@ do
     echo -e "Компиляция \033[0;35m""$(basename ${File})""\033[0m"
     gcc ${File} -lstdc++ -o ${BuildDir}/${OutFile}
     CompileStatus=$?
+    [[ "${UseOMP}" == "y" ]] && gcc ${File} -lstdc++ -fopenmp -o ${BuildDir}/${OutFile}_omp
     echo -ne "\033[0;35m""$(basename ${File})""\033[0m: "
     if [[ ${CompileStatus} -eq 0 ]]; then echo -e "\033[0;32mSUCCESS\033[0m"
     else echo -e "\033[0;31mFAILED\033[0m"; fi

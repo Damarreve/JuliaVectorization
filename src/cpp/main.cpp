@@ -5,6 +5,7 @@
 double* multiply(double** _matrix, double* _vector, int dimension)
 {
     double* result = new double[dimension];
+#pragma omp parallel for num_threads(4)
     for (int i = 0; i < dimension; i++)
     {
         result[i] = 0;
@@ -46,5 +47,8 @@ int main(int argc, char* argv[], char *envp[])
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     printf("Duration of scalar multiplication: %dus (%dms)\n", duration.count(), duration.count() / 1000);
+    for (int i = 0; i < size; i++) delete a_matrix[i];
+    delete a_matrix;
+    delete a_vector;
     return 0;
 }
