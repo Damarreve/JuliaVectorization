@@ -29,7 +29,7 @@ int main(int argc, char* argv[], char *envp[])
 	return 1;
     }
     int size = atoi(argv[1]);
-    printf("Dimension is %d (it will use ~%dkb of RAM)\n", size, (size * (1 + size) * sizeof(double)) / 1000);
+    printf("Dimension is %d (it will use ~%dkb of RAM)\n", size, (size * (2 + size) * sizeof(double)) / 1000);
     auto start(std::chrono::high_resolution_clock::now());
     double* a_vector = new double[size];
     double** a_matrix = new double*[size];
