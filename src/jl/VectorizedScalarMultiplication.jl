@@ -1,6 +1,6 @@
 using Dates
 
-size = 500
+size = 5000
 ratio = 100
 debug = false
 println("Dimension is ", size)
@@ -21,7 +21,7 @@ if debug
 end
 
 _start = now()
-result .+= matrix * vector
+result = matrix * vector
 _end = now()
 
 if debug
