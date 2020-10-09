@@ -1,6 +1,23 @@
 using Dates
+using Distributed
 
-size = 5000
+function multiply(_vector1, _vector2)
+  result = 0.0
+  @sync @distributed for i = 1:length(_vector1)
+    result += _vector1[i] * _vector2[i] 
+  end
+  return result
+end
+
+function vect_scalar_product(_matrix, _vector)
+  result = zeros(length(_vector))
+  @distributed for i = 1:length(result)
+    result[i] = multiply(_matrix[i, :], _vector)
+  end
+  return result
+end
+
+size = 25000
 ratio = 100
 debug = false
 println("Dimension is ", size)
@@ -20,13 +37,23 @@ if debug
   println("-----------------")
 end
 
-_start = now()
-result = matrix * vector
-_end = now()
+t_start = now()
+@time result = matrix * vector
+t_end = now()
+println("Standart scalar multiplication took ", t_end - t_start)
 
 if debug
   display(result)
   println()
 end
 
-println("Vectorized scalar multiplication took ", _end - _start)
+t_start = now()
+@time result = vect_scalar_product(matrix, vector)
+t_end = now()
+println("Vectorized scalar multiplication took ", t_end - t_start)
+
+if debug
+  display(result)
+  println()
+end
+
